@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/y-miyakaw/price-comparison-api/cmd/server"
 
 func main() {
-	fmt.Println("Hello, World!")
+	server.Server()
 }
