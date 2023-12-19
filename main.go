@@ -1,7 +1,11 @@
 package main
 
-import "github.com/y-miyakaw/price-comparison-api/cmd/server"
+import (
+	"github.com/y-miyakaw/price-comparison-api/cmd/login"
+)
 
 func main() {
-	server.Server()
+	user := login.CreateJWT()
+	login.ParseJWT(user)
+
 }
