@@ -1,0 +1,35 @@
+version: "3"
+tasks:
+  setup:
+    desc: "Setup project"
+    cmds:
+      - go install github.com/rubenv/sql-migrate/...@latest
+      - go install github.com/sqlc-dev/sqlc/cmd/sqlc@v1.25.0
+      - go install github.com/cosmtrek/air@latest
+  setup-db:
+    desc: "Setup database"
+    cmds:
+      - docker compose up -d --build
+      - sql-migrate up -env=development
+  migrate:
+    desc: "Run database migrations"
+    dotenv: [".env.local"]
+    cmds:
+      - rm -rf tmp_migration
+      - mkdir tmp_migration
+      - cp database/migrations/* tmp_migration
+      - cd tmp_migration
+      - sql-migrate up -env=develop -config=dbconfig.yml
+      - cd ..
+      - rm -rf tmp_migration
+  migrate-down:
+    desc: "Rollback database migrations"
+    dotenv: [".env.local"]
+    cmds:
+      - rm -rf tmp_migration
+      - mkdir tmp_migration
+      - cp database/migrations/* tmp_migration
+      - cd tmp_migration
+      - sql-migrate down -env=develop -config=dbconfig.yml
+      - cd ..
+      - rm -rf tmp_migration
