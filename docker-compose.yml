@@ -1,0 +1,40 @@
+version: "3"
+services:
+  api:
+    container_name: price-comparison-api
+    build:
+      context: .
+      dockerfile: ./docker/api/Dockerfile
+      target: develop
+    env_file:
+      - .env.local
+    volumes:
+      - ./:/app
+    ports:
+      - "8080:8080"
+  db:
+    container_name: price-comparison-postgres
+    image: postgres:16
+    ports:
+      - "5429:5432"
+    env_file:
+      - .env.local
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+  # This code is for checking builder and distroless containers.
+  # builder:
+  #   container_name: api-builder
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #     target: builder
+  # distroless:
+  #   container_name: api-distroless
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #     target: production
+  #   ports:
+  #     - "8081:8080"
+  #   depends_on:
+  #     - builder
