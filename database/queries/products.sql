@@ -1,10 +1,10 @@
--- name: GetAllProductByUserID :many
+-- name: GetAllProductsByUserID :many
 SELECT * FROM products WHERE user_id = $1;
 
--- name: GetAllProductByCategory :many
+-- name: GetAllProductsByCategory :many
 SELECT * FROM products WHERE user_id = $1 AND category = $2;
 
--- name: GetAllProductByCategoryAndShops :many
+-- name: GetAllProductsByCategoryAndShops :many
 SELECT * FROM products WHERE user_id = $1 AND category = $2 AND shops = $3;
 
 -- name: GetAllProducts :many
