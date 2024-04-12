@@ -1,14 +1,29 @@
 package controller
 
-import "github.com/labstack/echo"
+import (
+	"net/http"
+
+	"github.com/labstack/echo"
+	"github.com/y-miyakaw/price-comparison-api/internal/usecase"
+)
 
 type IProductController interface {
 	GetAllProductsByUserID(c echo.Context) error
 }
 
-type ProductController struct {
+type productController struct {
+	pu usecase.IProductUsecase
 }
 
-func GetAllProductsByUserID(c echo.Context) error {
-	return c.String(200, "this is a response from the server")
+func NewProductController(pu usecase.IProductUsecase) IProductController {
+	return &productController{pu}
+}
+
+func (pc productController) GetAllProductsByUserID(c echo.Context) error {
+	userID := c.Param("userID")
+	products, err := pc.pu.GetAllProductsByUserID(userID)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	return c.JSON(http.StatusOK, products)
 }
