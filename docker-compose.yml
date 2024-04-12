@@ -12,11 +12,13 @@ services:
       - ./:/app
     ports:
       - "8080:8080"
+    depends_on:
+      - db
   db:
     container_name: price-comparison-postgres
     image: postgres:16
     ports:
-      - "5429:5432"
+      - "5432:5432"
     env_file:
       - .env.local
     volumes:
