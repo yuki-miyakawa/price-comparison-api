@@ -14,7 +14,6 @@ import (
 )
 
 func main() {
-	// godotenv.Load(".env.local")
 	connStr := fmt.Sprintf("postgresql://%s:%s@%s:%s/%s?sslmode=disable",
 		os.Getenv("POSTGRES_USER"),
 		os.Getenv("POSTGRES_PASSWORD"),
