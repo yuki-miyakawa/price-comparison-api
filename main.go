@@ -25,7 +25,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("error opening db: %v", err)
 	}
-	log.Println(db)
 	productRepository := repository.NewProductRepository(db)
 	productUsecase := usecase.NewProductUsecase(productRepository)
 	productController := controller.NewProductController(productUsecase)
